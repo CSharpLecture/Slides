@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+	<title>Programming C#</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<link rel="stylesheet" href="themes/styles/style.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Programming C#</h1>
+		<p>Florian Rappl, Department of Theoretical Physics, University of Regensburg</p>
+	</header>
+	<div class="slide cover" id="Cover"><div>
+		<section>
+			<header>
+				<h2>Programming C#</h2>
+				<h3>Day 8: Libraries and NuGet, work on the projects</h3>
+			</header>
+			<img src="pictures/cover.jpg" alt="">
+		</section>
+	</div></div>
+	<div class="slide" id="overview"><div>
+		<section>
+			<header>
+				<h2>Content</h2>
+			</header>
+			<ul>
+				<li>What are libraries?</li>
+				<li>Creating (CLR) libraries with C#</li>
+				<li>Package managers</li>
+				<li>The NuGet package manager</li>
+				<li>Overall project structure</li>
+				<!--<li>Using Git or TFS for source control</li>-->
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="libraries"><div>
+		<section>
+			<header>
+				<h2>What are libraries?</h2>
+			</header>
+			<ul>
+				<li>A library is a compiled binary</li>
+				<li>The only difference to an executable is that no Main() is defined</li>
+				<li>A library consists of types and functionality</li>
+				<li>Using 3rd party libraries boosts our productivity</li>
+				<li>There are great libraries written in C# or</li>
+				<li>Libraries that just wrap native libraries</li>
+				<li>We already use libraries if we use the .NET-Framework</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="csharp-library"><div>
+		<section>
+			<header>
+				<h2>Creating a library with C#</h2>
+			</header>
+			<ul>
+				<li>In Visual Studio: Start, New Project, C#, Class Library</li>
+				<li>Libraries are the most efficient way to re-use projects</li>
+				<li>Libraries are to the OS as what classes are to C#</li>
+				<li>They improve reusability and encapsulation</li>
+				<li>MSIL libraries also contain meta-data for reflection</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="clr-assembly"><div>
+		<section>
+			<header>
+				<h2>A CLR assembly</h2>
+			</header>
+			<img src="pictures/assembly.png" class="middle r" />
+		</section>
+	</div></div>
+	<div class="slide" id="package-managers"><div>
+		<section>
+			<header>
+				<h2>Package managers</h2>
+			</header>
+			<ul>
+				<li>Using external libraries is quite easy</li>
+				<li>The hard part is maintenance and dependencies</li>
+				<li>We have to keep them up-to-date and we might need other libraries</li>
+				<li>This can get quite cruel, since where to get is not always trivial</li>
+				<li>A package manager offers a solution to those problems</li>
+				<li>Usually there is a database with libraries</li>
+				<li>Adding a library will result in a check for the dependencies and installation of the required libraries</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="nuget"><div>
+		<section>
+			<header>
+				<h2>NuGet</h2>
+			</header>
+			<ul>
+				<li>NuGet is an open-source package manager for the Visual Studio</li>
+				<li>It is so popular, that it has been integrated into the Visual Studio 2012</li>
+				<li>Every external library is now on NuGet</li>
+				<li>Easy to publish on the public NuGet feed or create own private feeds</li>
+				<li>Big advantage: Project bound and easy updating</li>
+				<li>Another advantage: Powershell integrated</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="nuget-flow"><div>
+		<section>
+			<header>
+				<h2>NuGet flow</h2>
+			</header>
+			<img src="pictures/nuget.png" class="middle r" />
+		</section>
+	</div></div>
+	<div class="slide" id="project-structure"><div>
+		<section>
+			<header>
+				<h2>Overall project structure</h2>
+			</header>
+			<ul>
+				<li>Add external resources to your project(s)</li>
+				<li>Use NuGet for external libraries</li>
+				<li>Create own libraries if you want to re-use (non-UI) functionality</li>
+				<li>Use resource files for data, like images, sounds, texts, ...</li>
+				<li>Big advantage: They can be localized (German, English, ...)</li>
+				<li>Use DRY: Don't Repeat Yourself</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="presentations"><div>
+		<section>
+			<header>
+				<h2>All available presentations</h2>
+			</header>
+			<div class="left">
+				<b>Week 1</b>
+				<ul>
+					<li><a href="day1.html">Presentation of Monday</a></li>
+					<li><a href="day2.html">Presentation of Tuesday</a></li>
+					<li><a href="day3.html">Presentation of Wednesday</a></li>
+					<li><a href="day4.html">Presentation of Thursday</a></li>
+					<li><a href="day5.html">Presentation of Friday</a></li>
+				</ul>
+			</div>
+			<div class="right">
+				<b>Week 2</b>
+				<ul>
+					<li><a href="day6.html">Presentation of Monday</a></li>
+					<li><a href="day7.html">Presentation of Tuesday</a></li>
+					<li><a href="day8.html">Presentation of Wednesday</a></li>
+					<li><a href="day9.html">Presentation of Thursday</a></li>
+				</ul>
+			</div>
+		</section>
+	</div></div>
+	<div class="slide" id="end"><div>
+		<section>
+			<header>
+				<h2>More questions? Just mail!</h2>
+			</header>
+			<img src="pictures/mvp.png" alt="MVP" title="Microsoft Visual C# MVP 2012" style="width: 25%; float: right;" />
+			<p>Florian Rappl, MVP Visual C#</p>
+			<ul>
+				<li>My homepage: <a href="http://www.florian-rappl.de">www.florian-rappl.de</a></li>
+				<li>My email address: <a href="mailto:mail@florian-rappl.de">mail@florian-rappl.de</a></li>
+				<li>Find me on Google+: <a href="http://gplus.to/FlorianRappl">gplus.to/FlorianRappl</a></li>
+			</ul>
+			<ul>
+				<li>The lecture is available online at <a href="http://csharp.florian-rappl.de/">csharp.florian-rappl.de</a></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="progress"><div></div></div>
+	<script src="scripts/script.js"></script>
+	<!-- Copyright © 2013 Florian Rappl, www.florian-rappl.de -->
+</body>
+</html>

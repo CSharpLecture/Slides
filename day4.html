@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+	<title>Programming C#</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<link rel="stylesheet" href="themes/styles/style.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Programming C#</h1>
+		<p>Florian Rappl, Department of Theoretical Physics, University of Regensburg</p>
+	</header>
+	<div class="slide cover" id="Cover"><div>
+		<section>
+			<header>
+				<h2>Programming C#</h2>
+				<h3>Day 4: Threads and tasks, TPL, await and async and user controls</h3>
+			</header>
+			<img src="pictures/cover.jpg" alt="">
+		</section>
+	</div></div>
+	<div class="slide" id="overview"><div>
+		<section>
+			<header>
+				<h2>Content</h2>
+			</header>
+			<ul>
+				<li>Sets and LINQ</li>
+				<li>The message loop, threads and GUI synchronization</li>
+				<li>Wrapping threads in tasks</li>
+				<li>The Task Parallel Library (TPL)</li>
+				<li>Considerations for multi-threading</li>
+				<li>Using the asynchronous keywords</li>
+				<li>An overview of available controls</li>
+				<li>Building own user controls</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="sets-linq"><div>
+		<section>
+			<header>
+				<h2>Sets and LINQ</h2>
+			</header>
+			<ul>
+				<li>Reminder: LINQ execution is deferred!</li>
+				<li>LINQ is specialized on handled collections</li>
+				<li>Collections can be quite similar to sets</li>
+				<li>There are several methods for doing set math</li>
+				<li>Unions, intersections, exceptions, ...</li>
+				<li>Quite important is certainly <code>Distinct()</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="venn-linq"><div>
+		<section>
+			<header>
+				<h2>Venn diagrams</h2>
+			</header>
+			<img src="pictures/venn.png" class="middle r" />
+		</section>
+	</div></div>
+	<div class="slide" id="example-linq"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Sets and LINQ</h2>
+			</header>
+			<a href="samples/LinqSets.cs.txt" title="Download source" class="example-download">LinqSets.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="message-loop"><div>
+		<section>
+			<header>
+				<h2>The message loop</h2>
+			</header>
+			<ul>
+				<li>How does a GUI work? It's a big loop</li>
+				<li>This is called the message loop</li>
+				<li>The OS queues messages for our app</li>
+				<li>These messages get pumped once the app is idle</li>
+				<li>Ergo the idle state of an app is very important</li>
+				<li>Doing too much work will result in a non-responsive app</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="threads"><div>
+		<section>
+			<header>
+				<h2>The cure: threads</h2>
+			</header>
+			<ul>
+				<li>Hence the OS has a model called: threads</li>
+				<li>Every app comes with 1 thread: the GUI thread</li>
+				<li>Advantage with several (CPU) cores: prob. faster execution</li>
+				<li>Advantage even with just a single core: responsive UI</li>
+				<li>The reason is that the OS schedules CPU time</li>
+				<li>The only question is now: How can we create threads?</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="creating-threads"><div>
+		<section>
+			<header>
+				<h2>Creating threads</h2>
+			</header>
+			<ul>
+				<li>We need a method that should run in that thread</li>
+				<li>The class <code>Thread</code> represents a thread</li>
+				<li>The constructor requires a delegate of the method to run</li>
+				<li>The namespace <code>System.Threading</code> contains the class and more</li>
+				<li>Running <code>Start()</code> will run the method in another thread</li>
+				<li>Important: Exceptions from other threads will bubble up!</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-threads"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Threads</h2>
+			</header>
+			<a href="samples/Threads.cs.txt" title="Download source" class="example-download">Threads.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="thread-problems"><div>
+		<section>
+			<header>
+				<h2>Problems with threads</h2>
+			</header>
+			<ul>
+				<li>Threads are running concurrently</li>
+				<li>Spawning multiple threads results in overhead</li>
+				<li>Consider using the <code>ThreadPool</code> for many threads</li>
+				<li>Avoid race conditions, i.e. solving non-independent problems</li>
+				<li>Biggest problem: How to communicate between threads?</li>
+				<li>Another problem: Changing the UI is not possible</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="lock-thread"><div>
+		<section>
+			<header>
+				<h2>Thread barriers</h2>
+			</header>
+			<ul>
+				<li>C# introduces the <code>lock</code> keyword</li>
+				<li>The <code>lock</code> blocks usage on certain lines of code</li>
+				<li>Barriers help to reduce race conditions</li>
+				<li>The barrier status (set / unset) is determined by a pointer</li>
+				<li>A pointer is here just given by a reference type</li>
+			</ul>
+<pre>
+<code>var obj = new object();</code>
+<code>lock(obj) { /* locked! */ }</code>
+</pre>
+		</section>
+	</div></div>
+	<div class="slide" id="sync-thread"><div>
+		<section>
+			<header>
+				<h2>Thread synchronization</h2>
+			</header>
+			<ul>
+				<li>Every WinForms control has an <code>Invoke()</code> method</li>
+				<li>In WPF we can use the (generic) <code>Dispatcher</code> property</li>
+				<li>However, the most generic way of doing thread-safe UI calls is over the <code>SynchronizationContext</code> class</li>
+				<li>The static property <code>Current</code> carries the sync. context</li>
+				<li>This property is set by e.g. a WinForms <code>Form</code> instance</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-thread-synchronization"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Thread synchronization</h2>
+			</header>
+			<a href="samples/ThreadSync.cs.txt" title="Download source" class="example-download">ThreadSync.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="tasks"><div>
+		<section>
+			<header>
+				<h2>Tasks</h2>
+			</header>
+			<ul>
+				<li>Much more modern and powerful: Tasks!</li>
+				<li>Concept: Resources (threads, ...) are handled by the library</li>
+				<li>We have a very optimized (and managed) thread pool</li>
+				<li>Tasks can be connected, scheduled and synchronized</li>
+				<li>Important: Exceptions do not bubble up unless requested!</li>
+				<li>Nowadays everything is centered around the <code>Task</code> class</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="task-parallel-library"><div>
+		<section>
+			<header>
+				<h2>The TPL</h2>
+			</header>
+			<ul>
+				<li>A set of useful classes and methods for tasks</li>
+				<li>Very elegant: using <code>Parallel.For()</code> for huge loops</li>
+				<li>Be careful with: race conditions &amp; overhead due to creation</li>
+				<li>The TPL also introduced PLINQ (parallel LINQ)</li>
+				<li>Use parallel queries by calling the <code>AsParallel()</code> extension</li>
+				<li>Be aware of race conditions and shared resources</li>
+				<li>Another great feature of the TPL: new (concurrent) types</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="tpl-structure"><div>
+		<section>
+			<header>
+				<h2>Structure of the TPL</h2>
+			</header>
+			<img src="pictures/tpl.png" class="middle r" />
+		</section>
+	</div></div>
+	<div class="slide" id="threading-considerations"><div>
+		<section>
+			<header>
+				<h2>Considerations for multi-threading</h2>
+			</header>
+			<ul>
+				<li>The workload has to be big enough</li>
+				<li>At least as much instructions as creating and ending the thread</li>
+				<li>Just running a problem on more cores is not equal more speed</li>
+				<li>Always think about IO-bound vs CPU-bound</li>
+				<li>IO-bound? 1 thread that is not the GUI thread is enough</li>
+				<li>CPU-bound? Up to <i>N</i> threads (for <i>N</i> cores) additional threads</li>
+				<li>Reduce communication to a minimum</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-tpl"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Task Parallel Library</h2>
+			</header>
+			<a href="samples/Tasks.cs.txt" title="Download source" class="example-download">Tasks.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="async-await"><div>
+		<section>
+			<header>
+				<h2>Await my async!</h2>
+			</header>
+			<ul>
+				<li>C# 5 introduces two new keywords: <code>await</code> and <code>async</code></li>
+				<li>By using <code>async</code> we mark functions as being asynchronous</li>
+				<li>This enables us to use the <code>await</code> keyword</li>
+				<li>This DOES not spawn a new thread</li>
+				<li>The default return value is <code>Task</code></li>
+				<li>The purpose is to write sequential code, which runs concurrently</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="async-explained"><div>
+		<section>
+			<header>
+				<h2>Await my async!</h2>
+			</header>
+			<div class="left">
+				<img src="pictures/awaitasync.png" />
+			</div>
+			<div class="right">
+				<ul>
+					<li>The method is entered (doing UI)</li>
+					<li>Calling long-lasting function</li>
+					<li>The UI is meanwhile responsive</li>
+					<li>Once the task is finished ...</li>
+					<li>... the method is resuming</li>
+					<li>Doing some UI stuff again</li>
+				</ul>
+			</div>
+		</section>
+	</div></div>
+	<div class="slide" id="await-explained"><div>
+		<section>
+			<header>
+				<h2>Do's and don'ts</h2>
+			</header>
+			<ul>
+				<li><code>await</code> transforms a <code>Task&lt;T&gt;</code> in <code>T</code></li>
+				<li>i.e. the variable <code>a</code> in <code>var a = await MyFoo();</code> of <code>async Task&lt;int&gt;Foo()</code> will be an integer</li>
+				<li>Really important here: We can use <code>try-catch</code></li>
+				<li>We could also use async over sync with <code>Task.Run()</code></li>
+				<li>Of course the opposite is also possible: sync over async</li>
+				<li>Here we just have to omit the <code>await</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="async-gotchas"><div>
+		<section>
+			<header>
+				<h2>Common mistakes</h2>
+			</header>
+			<ul>
+				<li><code>async void</code> should only be used with event handlers</li>
+				<li>Using sync over async with an async function that switches to the UI</li>
+				<li>This will result in a deadlock, i.e. the UI is dead</li>
+				<li>Spawning too many (parallel) tasks</li>
+				<li>Using a lambda that returns <code>void</code> instead of <code>Task</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-await-async"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Await and async</h2>
+			</header>
+			<a href="samples/AwaitAsync.cs.txt" title="Download source" class="example-download">AwaitAsync.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="winforms-controls"><div>
+		<section>
+			<header>
+				<h2>Controls in Windows Forms</h2>
+			</header>
+			<ul>
+				<li>All common Windows controls exist</li>
+				<li>Some new ones have been integrated as well</li>
+				<li><code>ComboBox</code>, <code>TextBox</code>, <code>Label</code>, <code>Button</code></li>
+				<li>Or with children: <code>TabControl</code>, <code>Panel</code>, <code>GroupBox</code></li>
+				<li>Specialized input: <code>NumericUpDown</code>, <code>DateTimePicker</code></li>
+				<li>Each control has a big range of (mostly useful) properties</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="custom-controls"><div>
+		<section>
+			<header>
+				<h2>Creating custom controls</h2>
+			</header>
+			<ul>
+				<li>Most basic starting point: Inherit from <code>Component</code></li>
+				<li>Far better: Derive from <code>Control</code></li>
+				<li>Option with designer: <code>UserControl</code></li>
+				<li>Or pick one like <code>ScrollableControl</code></li>
+				<li>In most cases we have to do the drawing</li>
+				<li>Drawing is done over GDI+, more about it later</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-custom-control"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Create a control</h2>
+			</header>
+			<a href="samples/BlinkLabel.zip" title="Download source" class="example-download">BlinkLabel.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="presentations"><div>
+		<section>
+			<header>
+				<h2>All available presentations</h2>
+			</header>
+			<div class="left">
+				<b>Week 1</b>
+				<ul>
+					<li><a href="day1.html">Presentation of Monday</a></li>
+					<li><a href="day2.html">Presentation of Tuesday</a></li>
+					<li><a href="day3.html">Presentation of Wednesday</a></li>
+					<li><a href="day4.html">Presentation of Thursday</a></li>
+					<li><a href="day5.html">Presentation of Friday</a></li>
+				</ul>
+			</div>
+			<div class="right">
+				<b>Week 2</b>
+				<ul>
+					<li><a href="day6.html">Presentation of Monday</a></li>
+					<li><a href="day7.html">Presentation of Tuesday</a></li>
+					<li><a href="day8.html">Presentation of Wednesday</a></li>
+					<li><a href="day9.html">Presentation of Thursday</a></li>
+				</ul>
+			</div>
+		</section>
+	</div></div>
+	<div class="slide" id="end"><div>
+		<section>
+			<header>
+				<h2>More questions? Just mail!</h2>
+			</header>
+			<img src="pictures/mvp.png" alt="MVP" title="Microsoft Visual C# MVP 2012" style="width: 25%; float: right;" />
+			<p>Florian Rappl, MVP Visual C#</p>
+			<ul>
+				<li>My homepage: <a href="http://www.florian-rappl.de">www.florian-rappl.de</a></li>
+				<li>My email address: <a href="mailto:mail@florian-rappl.de">mail@florian-rappl.de</a></li>
+				<li>Find me on Google+: <a href="http://gplus.to/FlorianRappl">gplus.to/FlorianRappl</a></li>
+			</ul>
+			<ul>
+				<li>The lecture is available online at <a href="http://csharp.florian-rappl.de/">csharp.florian-rappl.de</a></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="progress"><div></div></div>
+	<script src="scripts/script.js"></script>
+	<!-- Copyright © 2013 Florian Rappl, www.florian-rappl.de -->
+</body>
+</html>
