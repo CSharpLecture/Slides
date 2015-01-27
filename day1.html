@@ -1,0 +1,361 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+	<title>Programming C#</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<link rel="stylesheet" href="themes/styles/style.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Programming C#</h1>
+		<p>Florian Rappl, Department of Theoretical Physics, University of Regensburg</p>
+	</header>
+	<div class="slide cover" id="Cover"><div>
+		<section>
+			<header>
+				<h2>Programming C#</h2>
+				<h3>Day 1: Basic concepts, types, arrays, properties and Console projects</h3>
+			</header>
+			<img src="pictures/cover.jpg" alt="">
+		</section>
+	</div></div>
+	<div class="slide" id="overview"><div>
+		<section>
+			<header>
+				<h2>Content</h2>
+			</header>
+			<ul>
+				<li>The Microsoft Visual Studio</li>
+				<li>Basic concepts and syntax</li>
+				<li>The C# type system</li>
+				<li>Arrays, Lists, Dictionaries</li>
+				<li>Constants and properties</li>
+				<li>C# projects and debugging</li>
+				<li>Writing and running console projects</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="microsoft-vs"><div>
+		<section>
+			<header>
+				<h2>Micosoft Visual Studio (VS)</h2>
+			</header>
+			<ul>
+				<li>Multiple ways to write C#</li>
+				<li>The most elegant and efficient is probably using VS</li>
+				<li>CIP Pool has version 2010 (2012 would be better)</li>
+				<li>Integrated project management, debugging, profiling, ...</li>
+				<li>Most important: File, New Project, C#, Console project</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="basic-concepts-1"><div>
+		<section>
+			<header>
+				<h2>Basic concepts of C# (pt. 1)</h2>
+			</header>
+			<ul>
+				<li>C# (out-of-the-box) is not native and not interpreted</li>
+				<li>Programs are saved in an intermediate language</li>
+				<li>That makes C# universal (same concept as Java)</li>
+				<li>C# is also managed code, i.e. no control over memory</li>
+				<li>C# is a strongly-typed language with a static type system</li>
+				<li>This means that types must be identified at compilation</li>
+				<li>Encapsulation required, i.e. every function is assigned to a class</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="garbage-collection"><div>
+		<section>
+			<header>
+				<h2>How Garbage Collection works</h2>
+			</header>
+			<img src="pictures/gc.png" class="middle r" />
+		</section>
+	</div></div>
+	<div class="slide" id="basic-concepts-2"><div>
+		<section>
+			<header>
+				<h2>Basic concepts of C# (pt. 2)</h2>
+			</header>
+			<ul>
+				<li>Just two datatypes: <code>struct</code> and <code>class</code></li>
+				<li>Structures are value types (only copies are passed)</li>
+				<li>Classes are reference types (references are passed)</li>
+				<li>The concept of a pointer is embedded in the language</li>
+				<li>Passing structures by reference is possible with the <code>ref</code> keyword</li>
+				<li>Another way is the <code>out</code> keyword (enforces assignment)</li>
+				<li>Every object inherits at least from another object called <code>object</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="basic-concepts-3"><div>
+		<section>
+			<header>
+				<h2>Basic concepts of C# (pt. 3)</h2>
+			</header>
+			<ul>
+				<li>The syntax is quite close to C++ / Java</li>
+				<li>Datatypes have to be specified</li>
+				<li>Example: Due to encapsulation all console related functions can be found in the static class <code>Console</code>, which is located in the <code>System</code> namespace</li>
+				<li>Why static class? Closest to C <code>printf()</code>, <code>scanf()</code>, ...</li>
+				<li>Namespaces guarantee overview and unique naming</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="namespaces"><div>
+		<section>
+			<header>
+				<h2>What are namespaces?</h2>
+			</header>
+			<img src="pictures/worldmap.jpg" class="w">
+		</section>
+	</div></div>
+	<div class="slide" id="example-hello-world"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Hello World!</h2>
+			</header>
+			<a href="samples/HelloWorld.cs.txt" title="Download source" class="example-download">HelloWorld.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="syntax-1"><div>
+		<section>
+			<header>
+				<h2>Syntax of C# (pt. 1)</h2>
+			</header>
+			<ul>
+				<li>Example is quite close to C++</li>
+				<li>Differences: <code>using</code> for embedding namespaces</li>
+				<li>The main method has to be specified differently</li>
+				<li>We have <code>static void Main(string[] args)</code></li>
+				<li>Array datatype has already a field to specify the length</li>
+				<li>No header files and macros</li>
+				<li><code>if</code>, <code>else</code>, <code>for</code>, ... as in C++</li>
+				<li>Additionally we have <code>foreach</code> and <code>lock</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="syntax-2"><div>
+		<section>
+			<header>
+				<h2>Syntax of C# (pt. 2)</h2>
+			</header>
+			<ul>
+				<li>The dot operator lets use access the members of an object</li>
+				<li>Constants need to be defined using <code>const</code> and a type</li>
+				<li>Only structures can be constants, otherwise use <code>readonly</code></li>
+				<li>Arrays are defined different than in C/C++</li>
+				<li>However, accessing arrays is the same as in C/C++</li>
+				<li>Several literals for creating types, like <code>"hello"</code> is a string type, <code>'C'</code> is a new char, <code>4</code> a new integer and <code>4.0</code> a new double</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-control-flow"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Control flow</h2>
+			</header>
+			<a href="samples/ControlFlow.cs.txt" title="Download source" class="example-download">ControlFlow.cs</a>
+			<a href="samples/Foreach.cs.txt" title="Download source" class="example-download">Foreach.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="datatypes"><div>
+		<section>
+			<header>
+				<h2>Datatypes</h2>
+			</header>
+			<ul>
+				<li>Some basic structures (size in bytes): <code>char</code> (2), <code>short</code> (2), <code>int</code> (4), <code>long</code> (8), <code>float</code> (4), <code>double</code> (8), <code>decimal</code> (16), <code>bool</code> (1)</li>
+				<li>Some important classes: <code>string</code>, <code>Array</code>, <code>ArrayList</code>, <code>Stack</code>, <code>Queue</code></li>
+				<li>We have <code>enum</code>, <code>struct</code>, <code>class</code>, <code>interface</code>, <code>delegate</code> to create new data types</li>
+				<li>An enumeration is a collection of constants</li>
+				<li>A delegate is a managed function pointer</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="operators"><div>
+		<section>
+			<header>
+				<h2>Operators</h2>
+			</header>
+			<ul>
+				<li>C# supports the same standard operators as C++</li>
+				<li>Overloading is only possible for certain operators</li>
+				<li>The execution hierachy is determined by the operator</li>
+				<li>Changing the hierachy is possible by using brackets</li>
+				<li>A selection of operators: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>!</code>, <code>&lt;</code>, <code>&gt;</code>, <code>==</code>, <code>!=</code>, <code>&lt;&lt;</code>, <code>&gt;&gt;</code>, ...</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-datatypes-operators"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Datatypes and operators</h2>
+			</header>
+			<a href="samples/DataTypes.cs.txt" title="Download source" class="example-download">DataTypes.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="arrays"><div>
+		<section>
+			<header>
+				<h2>Arrays</h2>
+			</header>
+			<ul>
+				<li>A simple array of integers: <code>int[] myarray = new int[5];</code></li>
+				<li>Initialization <code>char[] arr = new char[] { 'a', 'b', 'c' }</code></li>
+				<li>Modification <code>arr[2] = 'd'</code> (0-based !)</li>
+				<li>More-dimensional: <code>double[,] matrix = new double[5,5];</code></li>
+				<li>Access <code>Console.WriteLine("M_33 = " + matrix[2,2])</code></li>
+				<li>It is also possible to use jagged arrays like so:
+<pre>
+<code>double[][] matrix = new double[5][];</code>
+<code>matrix[0] = new double[5]; // ...</code>
+</pre>
+</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="collections"><div>
+		<section>
+			<header>
+				<h2>Collections</h2>
+			</header>
+			<ul>
+				<li>The .NET-Framework contains a huge number of collections</li>
+				<li>Collections go beyond the fixed limits of arrays</li>
+				<li>With OOP it is easily possible to create own implementations</li>
+				<li>Some collections are obvious (Dictionaries, Hashtables, Lists) others more specialized (Stack, Queue)</li>
+				<li>The <code>ArrayList</code> object is one of the simplest implementations</li>
+				<li>It takes only types of type <code>object</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-arrays"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Arrays and collections</h2>
+			</header>
+			<a href="samples/Arrays.cs.txt" title="Download source" class="example-download">Arrays.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="properties-1"><div>
+		<section>
+			<header>
+				<h2>Properties (pt. 1)</h2>
+			</header>
+			<ul>
+				<li>Variables should usually be only modified within a class</li>
+				<li>However, what if we want read access from outside?</li>
+				<li>Solution C++: Create method with a name starting with <i>Get</i></li>
+				<li>Solution C#: (other methods see it like a variable)
+<pre><code>int myVariable;</code>
+<code>public int MyVariable { get { return myVariable; } }</code></pre>
+				</li>
+				<li>This is called a property (possible: <code>get</code> and <code>set</code>)</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="properties-2"><div>
+		<section>
+			<header>
+				<h2>Properties (pt. 2)</h2>
+			</header>
+			<pre><code>public int MyVariable { </code>
+<code>	get { return myVariable; } </code>
+<code>	set { myVariable = value; /* More code ? */ } </code>
+<code>}</code></pre>
+			<ul>
+				<li>The big advantage in the <code>set</code> part - we can validate values, invoke events or function calls and control the state of our classes</li>
+				<li>Less code maintenance required</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-properties"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Properties</h2>
+			</header>
+			<a href="samples/Properties.cs.txt" title="Download source" class="example-download">Properties.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="debugging"><div>
+		<section>
+			<header>
+				<h2>Debugging</h2>
+			</header>
+			<ul>
+				<li>Debugging is great with the VS</li>
+				<li>Remember: <i>F5</i> to start debugging</li>
+				<li><i>CTRL+F5</i> to start the project</li>
+				<li>Insert breakpoints to see what's going on</li>
+				<li>While debugging: <i>F10</i> to step over, <i>F11</i> to step into</li>
+				<li>Step out of the current function with <i>SHIFT+F11</i></li>
+				<li>More possibilites (watches, locals, interaction, ...)</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="console"><div>
+		<section>
+			<header>
+				<h2>Console projects</h2>
+			</header>
+			<ul>
+				<li>No GUI, just the plain Windows command line</li>
+				<li>All possibilities given in the <code>Console</code> class</li>
+				<li>Possible to pass arbitrary objects to <code>Console.Write()</code></li>
+				<li>Reason: Every class inherits from <code>object</code> and has <code>ToString()</code></li>
+				<li>Possibility of formatting strings with placeholders <code>{0}</code> etc.</li>
+				<li>Use <code>ReadLine()</code> to read string until <i>RETURN</i></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="presentations"><div>
+		<section>
+			<header>
+				<h2>All available presentations</h2>
+			</header>
+			<div class="left">
+				<b>Week 1</b>
+				<ul>
+					<li><a href="day1.html">Presentation of Monday</a></li>
+					<li><a href="day2.html">Presentation of Tuesday</a></li>
+					<li><a href="day3.html">Presentation of Wednesday</a></li>
+					<li><a href="day4.html">Presentation of Thursday</a></li>
+					<li><a href="day5.html">Presentation of Friday</a></li>
+				</ul>
+			</div>
+			<div class="right">
+				<b>Week 2</b>
+				<ul>
+					<li><a href="day6.html">Presentation of Monday</a></li>
+					<li><a href="day7.html">Presentation of Tuesday</a></li>
+					<li><a href="day8.html">Presentation of Wednesday</a></li>
+					<li><a href="day9.html">Presentation of Thursday</a></li>
+				</ul>
+			</div>
+		</section>
+	</div></div>
+	<div class="slide" id="end"><div>
+		<section>
+			<header>
+				<h2>More questions? Just mail!</h2>
+			</header>
+			<img src="pictures/mvp.png" alt="MVP" title="Microsoft Visual C# MVP 2012" style="width: 25%; float: right;" />
+			<p>Florian Rappl, MVP Visual C#</p>
+			<ul>
+				<li>My homepage: <a href="http://www.florian-rappl.de">www.florian-rappl.de</a></li>
+				<li>My email address: <a href="mailto:mail@florian-rappl.de">mail@florian-rappl.de</a></li>
+				<li>Find me on Google+: <a href="http://gplus.to/FlorianRappl">gplus.to/FlorianRappl</a></li>
+			</ul>
+			<ul>
+				<li>The lecture is available online at <a href="http://csharp.florian-rappl.de/">csharp.florian-rappl.de</a></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="progress"><div></div></div>
+	<script src="scripts/script.js"></script>
+	<!-- Copyright © 2013 Florian Rappl, www.florian-rappl.de -->
+</body>
+</html>

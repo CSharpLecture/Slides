@@ -1,0 +1,361 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+	<title>Programming C#</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<link rel="stylesheet" href="themes/styles/style.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Programming C#</h1>
+		<p>Florian Rappl, Department of Theoretical Physics, University of Regensburg</p>
+	</header>
+	<div class="slide cover" id="Cover"><div>
+		<section>
+			<header>
+				<h2>Programming C#</h2>
+				<h3>Day 5: IO, webrequests, events, serializing objects and dynamic types</h3>
+			</header>
+			<img src="pictures/cover.jpg" alt="">
+		</section>
+	</div></div>
+	<div class="slide" id="overview"><div>
+		<section>
+			<header>
+				<h2>Content</h2>
+			</header>
+			<ul>
+				<li>Accessing the file system</li>
+				<li>Streams</li>
+				<li>Performing web requests</li>
+				<li>The C# event system</li>
+				<li>Serializing data in C#</li>
+				<li>The XML serializer</li>
+				<li>Dynamic programming with C#</li>
+				<li>object, var and dynamic</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="file-system"><div>
+		<section>
+			<header>
+				<h2>Accessing the file system</h2>
+			</header>
+			<ul>
+				<li>Task: Get information about a directory</li>
+				<li>Or tell me everything about a file</li>
+				<li>We need to read out information of the FS</li>
+				<li>Luckily Windows knows everything and has good APIs</li>
+				<li>The .NET-Framework opens those APIs for us</li>
+				<li>Important: When handling files think about threading</li>
+				<li>We do not want to block the UI thread</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="dotnet-fs"><div>
+		<section>
+			<header>
+				<h2>The <code>System.IO</code> namespace</h2>
+			</header>
+			<ul>
+				<li>The static helper class <code>Path</code></li>
+				<li>Two important classes: <code>Directory</code> and <code>File</code></li>
+				<li>Encapsulations like <code>DirectoryInfo</code>, <code>FileInfo</code></li>
+				<li>Or more specialized <code>DriveInfo</code></li>
+				<li>All kinds of streams (memory, file, text, ...)</li>
+				<li>The whole ACL model</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-file-systems"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - The file system</h2>
+			</header>
+			<a href="samples/FileSystem.zip" title="Download source" class="example-download">FileSystem.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="streams"><div>
+		<section>
+			<header>
+				<h2>Streams</h2>
+			</header>
+			<ul>
+				<li>Usually every IO operation is about streaming data</li>
+				<li>Every stream of data is dependent of the corresponding device</li>
+				<li>e.g. HDD, RAM, ethernet, modem, ...</li>
+				<li>The abstract base class is <code>Stream</code></li>
+				<li>Sometimes it might make sense to implement it yourself</li>
+				<li>Reading a file has to do with streams</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="reading-a-file"><div>
+		<section>
+			<header>
+				<h2>Reading a file</h2>
+			</header>
+			<ul>
+				<li>A specific implemention called <code>FileStream</code> exists</li>
+				<li><code>var fs = new FileStream("...", FileMode.Open)</code> will give us the stream</li>
+				<li>Now we can read a byte with <code>ReadByte()</code></li>
+				<li><code>Read()</code> will read as many bytes as specified into an array</li>
+				<li>Returns the number of read bytes (the end of the stream is a barrier)</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="writing-a-file"><div>
+		<section>
+			<header>
+				<h2>Writing a file</h2>
+			</header>
+			<ul>
+				<li>Writing a file is quite similar - e.g. <code>FileMode.Create</code></li>
+				<li>Here we have methods like <code>WriteByte()</code> and <code>Write()</code></li>
+				<li>Very important: After our operations we have to close the file</li>
+				<li>This happens with the method <code>Close()</code></li>
+				<li>Depending on the device bytes could be buffered before any actual write</li>
+				<li>If immediate writing is required use the <code>Flush()</code> method</li>
+				<li>Always use <code>ReadAsync()</code> and <code>WriteAsync()</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="streamreader-streamwriter"><div>
+		<section>
+			<header>
+				<h2><code>StreamReader</code>, <code>StreamWriter</code></h2>
+			</header>
+			<ul>
+				<li>They are implementations of <code>TextReader</code>, <code>TextWriter</code></li>
+				<li>Their purpose is elegant handling of text</li>
+				<li>They expect a <code>Stream</code> (or create a <code>FileStream</code>)</li>
+				<li>One can set a proper text encoding (like UTF8, Unicode, ...)</li>
+				<li>e.g. <code>var sw = new StreamWriter("...", false, Encoding.ASCII)</code></li>
+				<li>Here we have additionally <code>WriteLine()</code></li>
+				<li>All write methods accept strings or convert objects to strings</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-streams"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Memory and file streams</h2>
+			</header>
+			<a href="samples/DragAndDrop.zip" title="Download source" class="example-download">DragAndDrop.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="webrequests"><div>
+		<section>
+			<header>
+				<h2>Web requests</h2>
+			</header>
+			<ul>
+				<li>Accessing the internet is quite easy</li>
+				<li><code>WebRequest.Create()</code> creates a new web request</li>
+				<li>Here not blocking the UI is very important</li>
+				<li>We can directly query URLs and more</li>
+				<li>Direct access to the request stream (to the server)</li>
+				<li>We first need to request a response object</li>
+				<li>Then the request is completed</li>
+				<li>The response stream (answer) is then received (from the server)</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="simple-webrequest"><div>
+		<section>
+			<header>
+				<h2>A simple web request</h2>
+			</header>
+<pre>
+<code>var request = WebRequest.Create(url);</code>
+<code>var response = await request.GetResponseAsync();</code>
+<code>var stream = new StreamReader(response.GetResponseStream());</code>
+<code>var content = stream.ReadToEnd();</code>
+</pre>	
+		</section>
+	</div></div>
+	<div class="slide" id="example-webrequests"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - A webrequest with C#</h2>
+			</header>
+			<a href="samples/Webrequest.cs.txt" title="Download source" class="example-download">Webrequest.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="event-system"><div>
+		<section>
+			<header>
+				<h2>The C# event system</h2>
+			</header>
+			<ul>
+				<li>Important: The <code>event</code> keyword</li>
+				<li>Events are just delegates, but with benefits</li>
+				<li>Only accessible with the <code>+=</code>, <code>-=</code> operations (outside)</li>
+				<li>Inside we can execute them (called firing)</li>
+				<li><code>public event EventHandler MyEvent</code> to register</li>
+				<li>The delegate in this example is <code>EventHandler</code></li>
+				<li>.NET pattern: Arguments <code>object</code>, <code>EventArgs</code> (or derived)</li>
+				<li>The return type should be <code>void</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="event-important"><div>
+		<section>
+			<header>
+				<h2>Important event facts</h2>
+			</header>
+			<ul>
+				<li>Firing an event is done in the current thread</li>
+				<li>If necessary: perform context switch</li>
+				<li>If the handler is not set, it will be <code>null</code> (check first!)</li>
+				<li>One should prefer using overrides instead of events</li>
+				<li>This is of course only possible when deriving from a class</li>
+				<li>Events are (mostly) fired synchronously</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-events"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Events</h2>
+			</header>
+			<a href="samples/Event.zip" title="Download source" class="example-download">Event.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="serializing"><div>
+		<section>
+			<header>
+				<h2>Serializing data</h2>
+			</header>
+			<ul>
+				<li>The <code>BitConverter</code> is a very useful class</li>
+				<li>The attribute <code>[Serializable]</code> is important</li>
+				<li>Two ways: objects to bytes and bytes to objects</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="xml-serializer"><div>
+		<section>
+			<header>
+				<h2>XML serialization</h2>
+			</header>
+			<ul>
+				<li>Another way is the XML serialization</li>
+				<li>Advantage: Human readable and standardized</li>
+				<li>Disadvantage: Big files with overhead</li>
+				<li>Just use the <code>XmlSerializer</code> class</li>
+				<li>The method for serializing is <code>Serialize()</code></li>
+				<li>Object creation from XML files is also possible</li>
+				<li>Here we have to use the <code>Deserialize()</code> method</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-serialization"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Object serialization</h2>
+			</header>
+			<a href="samples/Serialization.zip" title="Download source" class="example-download">Serialization.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="dynamic"><div>
+		<section>
+			<header>
+				<h2>Dynamic programming</h2>
+			</header>
+			<ul>
+				<li>C# and the CLR are static typed</li>
+				<li>However, the DLR (Dynamic Language Runtime) is not</li>
+				<li>C# introduces the <code>DynamicObject</code> type</li>
+				<li>This is our portal to the DLR</li>
+				<li>We have to tell the compiler explicitely to use dynamic</li>
+				<li>How to use? <code>dynamic a = 4</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="dynamic-opportunities"><div>
+		<section>
+			<header>
+				<h2>Opportunities</h2>
+			</header>
+			<ul>
+				<li>Easier interaction with dynamic languages</li>
+				<li>Here mostly JavaScript and Python are mentioned</li>
+				<li>However, we lose intellisense support</li>
+				<li>The compiler cannot detect errors</li>
+				<li>Be aware of possible exceptions during runtime</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-dynamic"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Dynamic</h2>
+			</header>
+			<a href="samples/Dynamic.cs.txt" title="Download source" class="example-download">Dynamic.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="object-var-dynamic"><div>
+		<section>
+			<header>
+				<h2>object, var and dynamic</h2>
+			</header>
+			<ul>
+				<li>Never think they are equal!</li>
+				<li><code>var</code> can be <code>object</code> or <code>dynamic</code></li>
+				<li><code>var</code> is no type, but a placeholder</li>
+				<li><code>object</code> is the most general type; everything is an object</li>
+				<li><code>dynamic</code> is no type, but a switch</li>
+				<li>It tells the compiler to use the DLR</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="presentations"><div>
+		<section>
+			<header>
+				<h2>All available presentations</h2>
+			</header>
+			<div class="left">
+				<b>Week 1</b>
+				<ul>
+					<li><a href="day1.html">Presentation of Monday</a></li>
+					<li><a href="day2.html">Presentation of Tuesday</a></li>
+					<li><a href="day3.html">Presentation of Wednesday</a></li>
+					<li><a href="day4.html">Presentation of Thursday</a></li>
+					<li><a href="day5.html">Presentation of Friday</a></li>
+				</ul>
+			</div>
+			<div class="right">
+				<b>Week 2</b>
+				<ul>
+					<li><a href="day6.html">Presentation of Monday</a></li>
+					<li><a href="day7.html">Presentation of Tuesday</a></li>
+					<li><a href="day8.html">Presentation of Wednesday</a></li>
+					<li><a href="day9.html">Presentation of Thursday</a></li>
+				</ul>
+			</div>
+		</section>
+	</div></div>
+	<div class="slide" id="end"><div>
+		<section>
+			<header>
+				<h2>More questions? Just mail!</h2>
+			</header>
+			<img src="pictures/mvp.png" alt="MVP" title="Microsoft Visual C# MVP 2012" style="width: 25%; float: right;" />
+			<p>Florian Rappl, MVP Visual C#</p>
+			<ul>
+				<li>My homepage: <a href="http://www.florian-rappl.de">www.florian-rappl.de</a></li>
+				<li>My email address: <a href="mailto:mail@florian-rappl.de">mail@florian-rappl.de</a></li>
+				<li>Find me on Google+: <a href="http://gplus.to/FlorianRappl">gplus.to/FlorianRappl</a></li>
+			</ul>
+			<ul>
+				<li>The lecture is available online at <a href="http://csharp.florian-rappl.de/">csharp.florian-rappl.de</a></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="progress"><div></div></div>
+	<script src="scripts/script.js"></script>
+	<!-- Copyright © 2013 Florian Rappl, www.florian-rappl.de -->
+</body>
+</html>

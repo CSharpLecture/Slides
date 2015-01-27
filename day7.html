@@ -1,0 +1,330 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+	<title>Programming C#</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<link rel="stylesheet" href="themes/styles/style.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Programming C#</h1>
+		<p>Florian Rappl, Department of Theoretical Physics, University of Regensburg</p>
+	</header>
+	<div class="slide cover" id="Cover"><div>
+		<section>
+			<header>
+				<h2>Programming C#</h2>
+				<h3>Day 7: Drawing with GDI+, exception handling, resource management</h3>
+			</header>
+			<img src="pictures/cover.jpg" alt="">
+		</section>
+	</div></div>
+	<div class="slide" id="overview"><div>
+		<section>
+			<header>
+				<h2>Content</h2>
+			</header>
+			<ul>
+				<li>Drawing with GDI+</li>
+				<li>Images and image formats</li>
+				<li>User control drawing</li>
+				<li>Handling exceptions</li>
+				<li>The IDisposable interface</li>
+				<li>Releasing resources</li>
+				<li>Reflection</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="drawing-gdi-plus"><div>
+		<section>
+			<header>
+				<h2>Drawing with GDI+</h2>
+			</header>
+			<ul>
+				<li>Windows has a drawing API called GDI</li>
+				<li>Windows Forms extends this API to GDI+</li>
+				<li>The central object is called <code>Graphics</code></li>
+				<li>This object requires a target</li>
+				<li>This can be either an image or the screen</li>
+				<li>Images have advantages (buffering, modifying, ...)</li>
+				<li>Be aware that this requires a lot of memory</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="gdi-plus-methods-1"><div>
+		<section>
+			<header>
+				<h2>GDI+ methods (pt. 1)</h2>
+			</header>
+			<ul>
+				<li>Creating an image: <code>var bmp = new Bitmap(400, 300)</code></li>
+				<li>Using it: <code>var g = Graphics.FromImage(bmp)</code></li>
+				<li>Now we have access to methods that start with Draw and Fill</li>
+				<li>Draw / fill methods draw / fill the shape (border / content)</li>
+				<li>Drawing is done by a <code>Pen</code> (width, color)</li>
+				<li>Filling is done by a <code>Brush</code> (px&rarr;color)</li>
+				<li>Basic brush: <code>SolidColorBrush</code></li>
+				<li>More advanced: <code>LinearGradientBrush</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="gdi-plus-methods-2"><div>
+		<section>
+			<header>
+				<h2>GDI+ methods (pt. 2)</h2>
+			</header>
+			<ul>
+				<li>e.g. <code>DrawRectangle()</code> draws the border of a rectangle</li>
+				<li>e.g. <code>FillEllipse()</code> fills an ellipse (could be circle)</li>
+				<li>There are more advanced concepts like transformations</li>
+				<li>Here we set transformation matrices (translate, rotate, scale)</li>
+				<li>Also (quite complex) paths can be done</li>
+				<li>Such paths can create regions</li>
+				<li>We can apply operators (like union) on regions</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-drawing-gdi-plus"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Drawing with GDI+</h2>
+			</header>
+			<a href="samples/GdiPlus.zip" title="Download source" class="example-download">GdiPlus.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="images"><div>
+		<section>
+			<header>
+				<h2>Images and image formats</h2>
+			</header>
+			<ul>
+				<li>There is a central abstract <code>Image</code> class</li>
+				<li>A more specialized version is the <code>Bitmap</code> class</li>
+				<li>The .NET-Framework knows several image formats (bmp, jpg, ...)</li>
+				<li>Images can easily be read or written to the filesystem</li>
+				<li><code>Image.FromFile()</code> reads an image to an <code>Image</code></li>
+				<li>Every instance has a <code>Save()</code> method</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="user-control-drawing"><div>
+		<section>
+			<header>
+				<h2>Drawing user controls</h2>
+			</header>
+			<ul>
+				<li>Several ways: A good way is to override <code>OnPaint()</code></li>
+				<li>This method gives us an argument of type <code>PaintEventArgs</code></li>
+				<li>The property <code>ClipRectangle</code> gives us the boundaries</li>
+				<li><code>Graphics</code> gives us the graphics pointer</li>
+				<li>Another way is to create an event handler for the <code>Paint</code> event</li>
+				<li>Some controls (like the <code>ListBox</code> control) give us a third way</li>
+				<li>Set the <code>DrawMode</code> and create an event handler (for <code>DrawItem</code>)</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-user-control-drawing"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - User control drawing</h2>
+			</header>
+			<a href="samples/GdiControl.zip" title="Download source" class="example-download">GdiControl.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="exceptions"><div>
+		<section>
+			<header>
+				<h2>Exceptions</h2>
+			</header>
+			<ul>
+				<li>We should always try to avoid exceptions</li>
+				<li>However, sometimes exceptions cannot be avoided</li>
+				<li>Example: Communication with the filesystem - OS throws exception</li>
+				<li>Hence we need a way to react to these exceptions</li>
+				<li>Rule: If an exception is possible, we should handle it</li>
+				<li>The construct is the same as in C++ (or Java)</li>
+				<li>Every exception inherits from the <code>Exception</code> class</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="throw-exceptions"><div>
+		<section>
+			<header>
+				<h2>Throwing exceptions</h2>
+			</header>
+			<ul>
+				<li><code>throw</code> will throw an exception or re-throw the current exception</li>
+				<li>Throwing an exception will end the current code execution</li>
+				<li>Additionally the exception will bubble up</li>
+			</ul>
+<pre>
+<code>void Main() { "Before".Dump(); Sub(); "After".Dump(); }</code>
+<code>void Sub() { "Enter".Dump(); throw new Exception("Bug"); }</code>
+<code>//Dump() is an extension that is like Console.WriteLine()</code>
+</pre>
+		</section>
+	</div></div>
+	<div class="slide" id="catch-exceptions"><div>
+		<section>
+			<header>
+				<h2>Catching exceptions</h2>
+			</header>
+			<ul>
+				<li>So how to handle? Consider a try-catch block</li>
+				<li><code>try { /* try here */ } catch { /* catch here /* }</code></li>
+				<li>The try-block contains all (prob. failing) statements</li>
+				<li>The catch-block will be called if an exception occurred</li>
+				<li>Such a catch-block catches ALL possible exceptions</li>
+				<li>If we want or need access write <code>catch (Exception ex) {}</code></li>
+				<li>Catch specific e.g. <code>catch (FileNotFoundException) {}</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="finally"><div>
+		<section>
+			<header>
+				<h2>Final actions</h2>
+			</header>
+			<ul>
+				<li>Sometimes we have code that depends on opening resources</li>
+				<li>No matter if an exception occurred or not we want to close those</li>
+				<li>This is where a <code>finally {}</code> block is useful</li>
+				<li>Now we can have try-catch, try-catch-finally or just try-finally</li>
+				<li>Also note that <code>return</code> in one block will still call the finally</li>
+			</ul>
+<pre>
+<code>try { "Try has been entered".Dump(); return true; }</code>
+<code>finally { "Finally has been called".Dump(); }</code>
+</pre>
+		</section>
+	</div></div>
+	<div class="slide" id="example-exceptions"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Exceptions</h2>
+			</header>
+			<a href="samples/Exceptions.cs.txt" title="Download source" class="example-download">Exceptions.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="idisposable"><div>
+		<section>
+			<header>
+				<h2>The <code>IDisposable</code> interface</h2>
+			</header>
+			<ul>
+				<li>Many methods have to mark resources as being in use</li>
+				<li>The question is: How to release such resources?</li>
+				<li>Apparently the <code>Close()</code> method is important</li>
+				<li>When automatically releasing resources, how does the GC know?</li>
+				<li>The GC will automatically call the <code>Dispose()</code> method</li>
+				<li>The method is defined in the interface <code>IDisposable</code></li>
+				<li>So this is our chance to tell the GC what to do</li>
+				<li>Additionally we have a destructor, but that is uninteresting</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="releasing-resources"><div>
+		<section>
+			<header>
+				<h2>Releasing resources</h2>
+			</header>
+			<ul>
+				<li>We can explicitly release resources using a <code>using</code> construct</li>
+				<li>The syntax is quite close to <code>foreach</code></li>
+				<li>We could also call <code>Dispose()</code> directly</li>
+			</ul>
+<pre>
+<code>using(var fs = new FileStream(/* ... */)) {</code>
+<code>	/* Do something */</code>
+<code>} // Resource automatically closed and freed</code>
+</pre>
+		</section>
+	</div></div>
+	<div class="slide" id="example-resource-management"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Resource management</h2>
+			</header>
+		</section>
+	</div></div>
+	<div class="slide" id="reflection"><div>
+		<section>
+			<header>
+				<h2>Reflection</h2>
+			</header>
+			<ul>
+				<li>Sometimes an instance of <code>Type</code> is required</li>
+				<li>We got that type with <code>typeof()</code> (at compile-time)</li>
+				<li>Or if we already had an instance: <code>GetType()</code></li>
+				<li>This <code>Type</code> object contains all information about the type</li>
+				<li>We can find out what properties (names and types) are defined</li>
+				<li>Also what methods and events are available can be found</li>
+				<li>Or what interfaces are implemented and what's the base class</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="using-reflection"><div>
+		<section>
+			<header>
+				<h2>Using reflection</h2>
+			</header>
+			<img src="pictures/reflection.png" class="middle r" />
+		</section>
+	</div></div>
+	<div class="slide" id="example-reflection"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Reflection</h2>
+			</header>
+			<a href="samples/Reflection.zip" title="Download source" class="example-download">Reflection.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="presentations"><div>
+		<section>
+			<header>
+				<h2>All available presentations</h2>
+			</header>
+			<div class="left">
+				<b>Week 1</b>
+				<ul>
+					<li><a href="day1.html">Presentation of Monday</a></li>
+					<li><a href="day2.html">Presentation of Tuesday</a></li>
+					<li><a href="day3.html">Presentation of Wednesday</a></li>
+					<li><a href="day4.html">Presentation of Thursday</a></li>
+					<li><a href="day5.html">Presentation of Friday</a></li>
+				</ul>
+			</div>
+			<div class="right">
+				<b>Week 2</b>
+				<ul>
+					<li><a href="day6.html">Presentation of Monday</a></li>
+					<li><a href="day7.html">Presentation of Tuesday</a></li>
+					<li><a href="day8.html">Presentation of Wednesday</a></li>
+					<li><a href="day9.html">Presentation of Thursday</a></li>
+				</ul>
+			</div>
+		</section>
+	</div></div>
+	<div class="slide" id="end"><div>
+		<section>
+			<header>
+				<h2>More questions? Just mail!</h2>
+			</header>
+			<img src="pictures/mvp.png" alt="MVP" title="Microsoft Visual C# MVP 2012" style="width: 25%; float: right;" />
+			<p>Florian Rappl, MVP Visual C#</p>
+			<ul>
+				<li>My homepage: <a href="http://www.florian-rappl.de">www.florian-rappl.de</a></li>
+				<li>My email address: <a href="mailto:mail@florian-rappl.de">mail@florian-rappl.de</a></li>
+				<li>Find me on Google+: <a href="http://gplus.to/FlorianRappl">gplus.to/FlorianRappl</a></li>
+			</ul>
+			<ul>
+				<li>The lecture is available online at <a href="http://csharp.florian-rappl.de/">csharp.florian-rappl.de</a></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="progress"><div></div></div>
+	<script src="scripts/script.js"></script>
+	<!-- Copyright © 2013 Florian Rappl, www.florian-rappl.de -->
+</body>
+</html>

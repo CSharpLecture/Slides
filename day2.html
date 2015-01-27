@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+	<title>Programming C#</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<link rel="stylesheet" href="themes/styles/style.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Programming C#</h1>
+		<p>Florian Rappl, Department of Theoretical Physics, University of Regensburg</p>
+	</header>
+	<div class="slide cover" id="Cover"><div>
+		<section>
+			<header>
+				<h2>Programming C#</h2>
+				<h3>Day 2: Object oriented programming (OOP), Generics and Windows Forms projects</h3>
+			</header>
+			<img src="pictures/cover.jpg" alt="">
+		</section>
+	</div></div>
+	<div class="slide" id="overview"><div>
+		<section>
+			<header>
+				<h2>Content</h2>
+			</header>
+			<ul>
+				<li>Again: Difference <code>class</code> and <code>struct</code></li>
+				<li>Constructor and inheritance</li>
+				<li>Keywords and syntax</li>
+				<li>Polymorphism</li>
+				<li>Modifiers</li>
+				<li>Generic classes and methods</li>
+				<li>Implementing interfaces</li>
+				<li>Example of OOP: Windows Forms</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="struct-class"><div>
+		<section>
+			<header>
+				<h2>Structures and classes</h2>
+			</header>
+			<ul>
+				<li>Structures are value types and will be copied</li>
+				<li>They are non-nullable (no instantiation required)</li>
+				<li>Classes are reference types and will be referenced</li>
+				<li>They are <code>null</code> if not instantiated</li>
+				<li>Polymorphism is possible with both</li>
+				<li>Structures can only inherit from interfaces</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-struct-class"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Structures and classes</h2>
+			</header>
+			<a href="samples/Structures.cs.txt" title="Download source" class="example-download">Structures.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="constructor"><div>
+		<section>
+			<header>
+				<h2>Constructor</h2>
+			</header>
+			<ul>
+				<li>The constructor is always called</li>
+				<li>If no constructor is specified, a default one is used</li>
+				<li>Constructors can call other constructors of the same class</li>
+				<li>Or a constructor of the base class</li>
+				<li>By default the default constr. of the base class is called</li>
+				<li>Calling order: Call the other constructor, then invoke local code</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="inheritance"><div>
+		<section>
+			<header>
+				<h2>Inheritance</h2>
+			</header>
+			<ul>
+				<li>In C# a class can only inherit from one class</li>
+				<li>Structures and classes can implement <i>n</i> interfaces</li>
+				<li>Access the classes members with the <code>this</code> pointer</li>
+				<li>Exclusively access base class members with <code>base</code></li>
+				<li>Modifiers are very important</li>
+				<li>Interfaces do not need modifiers, all <code>public</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="constructor-inheritance"><div>
+		<section>
+			<header>
+				<h2>Inheritance flow</h2>
+			</header>
+			<img src="pictures/ctor.png" class="middle r">
+		</section>
+	</div></div>
+	<div class="slide" id="modifiers"><div>
+		<section>
+			<header>
+				<h2>Modifiers</h2>
+			</header>
+			<ul>
+				<li>Access only from current class: <code>private</code></li>
+				<li>Access also from inherited classes: <code>protected</code></li>
+				<li>Access also from whole library: <code>internal</code></li>
+				<li>Access to everyone: <code>public</code></li>
+				<li>Additionally: <code>internal protected</code>, i.e. internal <i>or</i> protected</li>
+				<li>Default: <code>class</code> / <code>struct</code> / <code>interface</code> / <code>delegate</code> / <code>enum</code> is <code>internal</code>, a member of a class or structure is <code>private</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="polymorphism"><div>
+		<section>
+			<header>
+				<h2>Polymorphism</h2>
+			</header>
+			<ul>
+				<li>Hiding is always possible</li>
+				<li>Recommended technique: mark method as <code>new</code></li>
+				<li>New implementation only if marked as <code>abstract</code> (no basic implementation available) or <code>virtual</code></li>
+				<li>Mark new implementation as <code>override</code></li>
+				<li>Childs need to specify base constructor if no def. constructor available</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-constructor-inheritance"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Inheritance and polymorphism</h2>
+			</header>
+			<a href="samples/Polymorphism.cs.txt" title="Download source" class="example-download">Polymorphism.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="generics"><div>
+		<section>
+			<header>
+				<h2>Generics</h2>
+			</header>
+			<ul>
+				<li>Generics is another way of reusing code</li>
+				<li>The goal is to generate (similar) classes that differ in one or more types</li>
+				<li>Best example: <code>List&lt;T&gt;</code> - strongly typed collection (list)</li>
+				<li>Compiler generates the classes for all types that are used in our code</li>
+				<li>If we use <code>List&lt;int&gt;</code>, <code>List&lt;double&gt;</code>, two classes will be generated by the compiler</li>
+				<li>Requirement: Specifying the type identifiers (like method arguments) and using them (e.g. name <code>T</code> with usage <code>T myvariable</code>)</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="compiler-generated"><div>
+		<section>
+			<header>
+				<h2>Compiler generated classes</h2>
+			</header>
+			<img src="pictures/generics.png" class="r middle">
+		</section>
+	</div></div>
+	<div class="slide" id="generic-methods"><div>
+		<section>
+			<header>
+				<h2>Generic methods</h2>
+			</header>
+			<ul>
+				<li>Not only classes can be generated, also methods</li>
+				<li>Similar syntax, but (mostly) different (easier) usage</li>
+				<li>For methods the compiler can (mostly) infer the type</li>
+			</ul>
+<pre><code>public static void <mark>Swap<mark class="important">&lt;T&gt;</mark></mark>(ref T l, ref T r) {</code>
+<code>	T temp = r; r = l; l = temp;</code>
+<code>}</code>
+<code>int a = 3; int b = 4; <mark>Swap</mark>(ref a, ref b);</code></pre>
+		</section>
+	</div></div>
+	<div class="slide" id="generic-constraints"><div>
+		<section>
+			<header>
+				<h2>Generic constraints</h2>
+			</header>
+			<ul>
+				<li>Generics alone are powerful, yet very limited</li>
+				<li>By setting constraints some limitations can be overcome</li>
+				<li>The magic keyword is <code>where</code></li>
+				<li>Several possibilities e.g. <code>new()</code> means has def. constructor</li>
+				<li>One example: <code>void Test&lt;T&gt;(T obj) where T : new()</code></li>
+				<li>More constraints possible, e.g. <code>T : Stopwatch, new()</code></li>
+				<li>Constraints with multiple types? Separate with <code>where</code></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-generics"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Generics</h2>
+			</header>
+			<a href="samples/Generics.cs.txt" title="Download source" class="example-download">Generics.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="interfaces"><div>
+		<section>
+			<header>
+				<h2>Interfaces</h2>
+			</header>
+			<ul>
+				<li>Interfaces are like contracts</li>
+				<li>They say nothing about internal structures</li>
+				<li>Usages: ability to have multi-inheritance and specifying abilities</li>
+				<li>Can be implemented implicit (like members) or explicit (access only if casted to the specific interface type)</li>
+				<li>Interfaces can inherit from other interfaces</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="abstract"><div>
+		<section>
+			<header>
+				<h2>Abstract classes</h2>
+			</header>
+			<ul>
+				<li>Abstract class is like an interface with implementations</li>
+				<li>Just use <code>abstract</code> before <code>class</code></li>
+				<li>This enables the usage of <code>abstract</code> methods and properties</li>
+				<li>Such members have to be implemented</li>
+				<li>No instances of abstract classes can be created</li>
+				<li>Use it if you want something stronger than a contract</li>
+				<li>Keep in mind: A class can only inherit from one other class</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-abstract-interfaces"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Shaping classes</h2>
+			</header>
+			<a href="samples/Interfaces.cs.txt" title="Download source" class="example-download">Interfaces.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="windows-forms"><div>
+		<section>
+			<header>
+				<h2>Windows Forms</h2>
+			</header>
+			<ul>
+				<li>One of several GUI possibilities</li>
+				<li>First one implemented in .NET</li>
+				<li>Start a project: File, New, Project, C#, Windows Forms Application</li>
+				<li>The integrated designer will help us</li>
+				<li>There is a big OOP tree behind this</li>
+				<li>For us most important is <code>Control</code></li>
+				<li>A really important derivative is <code>Form</code></li>
+				<li><code>Form</code> represents a window</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="gui"><div>
+		<section>
+			<header>
+				<h2>Understanding GUI</h2>
+			</header>
+			<ul>
+				<li>We need a loop that performs updates</li>
+				<li>That loop is actually integrated in Windows, we just need to start it</li>
+				<li>Windows will then register our app and post messages</li>
+				<li>Such messages arrive in our app as events</li>
+				<li>An event can be something like mouse over, click, key down, ...</li>
+				<li>The state of controls is based on such events (like hover)</li>
+				<li>Additionally we can register our own handlers</li>
+				<li>Right now its enough to do it with the designer</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="message-loop"><div>
+		<section>
+			<header>
+				<h2>The message loop</h2>
+			</header>
+			<img src="pictures/messageloop.png" class="r middle">
+		</section>
+	</div></div>
+	<div class="slide" id="example-windows-forms"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Windows Forms</h2>
+			</header>
+			<a href="samples/SimpleForm.cs.txt" title="Download source" class="example-download">SimpleForm.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="presentations"><div>
+		<section>
+			<header>
+				<h2>All available presentations</h2>
+			</header>
+			<div class="left">
+				<b>Week 1</b>
+				<ul>
+					<li><a href="day1.html">Presentation of Monday</a></li>
+					<li><a href="day2.html">Presentation of Tuesday</a></li>
+					<li><a href="day3.html">Presentation of Wednesday</a></li>
+					<li><a href="day4.html">Presentation of Thursday</a></li>
+					<li><a href="day5.html">Presentation of Friday</a></li>
+				</ul>
+			</div>
+			<div class="right">
+				<b>Week 2</b>
+				<ul>
+					<li><a href="day6.html">Presentation of Monday</a></li>
+					<li><a href="day7.html">Presentation of Tuesday</a></li>
+					<li><a href="day8.html">Presentation of Wednesday</a></li>
+					<li><a href="day9.html">Presentation of Thursday</a></li>
+				</ul>
+			</div>
+		</section>
+	</div></div>
+	<div class="slide" id="end"><div>
+		<section>
+			<header>
+				<h2>More questions? Just mail!</h2>
+			</header>
+			<img src="pictures/mvp.png" alt="MVP" title="Microsoft Visual C# MVP 2012" style="width: 25%; float: right;" />
+			<p>Florian Rappl, MVP Visual C#</p>
+			<ul>
+				<li>My homepage: <a href="http://www.florian-rappl.de">www.florian-rappl.de</a></li>
+				<li>My email address: <a href="mailto:mail@florian-rappl.de">mail@florian-rappl.de</a></li>
+				<li>Find me on Google+: <a href="http://gplus.to/FlorianRappl">gplus.to/FlorianRappl</a></li>
+			</ul>
+			<ul>
+				<li>The lecture is available online at <a href="http://csharp.florian-rappl.de/">csharp.florian-rappl.de</a></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="progress"><div></div></div>
+	<script src="scripts/script.js"></script>
+	<!-- Copyright © 2013 Florian Rappl, www.florian-rappl.de -->
+</body>
+</html>

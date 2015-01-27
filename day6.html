@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+	<title>Programming C#</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<link rel="stylesheet" href="themes/styles/style.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Programming C#</h1>
+		<p>Florian Rappl, Department of Theoretical Physics, University of Regensburg</p>
+	</header>
+	<div class="slide cover" id="Cover"><div>
+		<section>
+			<header>
+				<h2>Programming C#</h2>
+				<h3>Day 6: Project management with Visual Studio, sample projects, other technologies</h3>
+			</header>
+			<img src="pictures/cover.jpg" alt="">
+		</section>
+	</div></div>
+	<div class="slide" id="overview"><div>
+		<section>
+			<header>
+				<h2>Content</h2>
+			</header>
+			<ul>
+				<li>The solution explorer</li>
+				<li>Managing projects</li>
+				<li>Build rules and events</li>
+				<li>Using hardware acceleration in WPF</li>
+				<li>Building dynamic webpages with ASP.NET MVC</li>
+				<li>Creating simple network services</li>
+				<li>Games with DirectX or OpenGL</li>
+				<li>WindowsPhone / Windows store apps</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="solution-explorer"><div>
+		<section>
+			<header>
+				<h2>The solution explorer</h2>
+			</header>
+			<ul>
+				<li>Add or remove project resources</li>
+				<li>Set compilation options</li>
+				<li>Manage dependencies</li>
+				<li>Setup (remote) debugging</li>
+				<li>Manage projects</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="manage-projects"><div>
+		<section>
+			<header>
+				<h2>Manage projects</h2>
+			</header>
+			<ul>
+				<li>A project represents an assembly</li>
+				<li>There is a huge variety of project templates</li>
+				<li>Differences: Basic settings, included dependencies, given code</li>
+				<li>The given code can be a great help</li>
+				<li>Reduces writing the same code over and over</li>
+				<li>Also the right target framework is set</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="build-rules-events"><div>
+		<section>
+			<header>
+				<h2>Build rules and events</h2>
+			</header>
+			<ul>
+				<li>Targets and target CPUs</li>
+				<li>Debug files</li>
+				<li>Build order</li>
+				<li>Generating XML documentation files</li>
+				<li>Symbols (definitions)</li>
+				<li>Pre- and post build events</li>
+				<li>Warning levels</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-project-management"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Project management</h2>
+			</header>
+		</section>
+	</div></div>
+	<div class="slide" id="wpf"><div>
+		<section>
+			<header>
+				<h2>WPF</h2>
+			</header>
+			<ul>
+				<li>Framework for GUI, based on XAML</li>
+				<li>Improved binding and styling capabilities</li>
+				<li>Hardware acceleration of the GUI</li>
+				<li>Disadvantage: Startup time and memory footprint</li>
+				<li>Perfect suited for the new MVVM pattern</li>
+				<li>Distinction: Visual tree and logical tree</li>
+				<li>Separation is very important</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="mvvm"><div>
+		<section>
+			<header>
+				<h2>Model-View-ViewModel</h2>
+			</header>
+			<img src="pictures/mvvm.png" class="middle r" />
+		</section>
+	</div></div>
+	<div class="slide" id="example-wpf"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - WPF</h2>
+			</header>
+			<a href="samples/WPF.zip" title="Download source" class="example-download">WPF.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="asp-net-mvc"><div>
+		<section>
+			<header>
+				<h2>ASP.NET MVC</h2>
+			</header>
+			<ul>
+				<li>ASP introduced the webforms concept</li>
+				<li>ASP.NET MVC is much closer to the outcome</li>
+				<li>Very tight control and comfortable flow</li>
+				<li>Excellent Model-View-Controller implementation</li>
+				<li>Additionally routes, model helpers, ... included</li>
+				<li>Very easy to extend and adjust</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="mvc"><div>
+		<section>
+			<header>
+				<h2>Model-View-Controller</h2>
+			</header>
+			<img src="pictures/mvc.png" class="middle r" />
+		</section>
+	</div></div>
+	<div class="slide" id="example-asp-net-mvc"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - ASP.NET MVC</h2>
+			</header>
+			<a href="samples/ASPMVC.zip" title="Download source" class="example-download">ASPMVC.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="signalr"><div>
+		<section>
+			<header>
+				<h2>SignalR</h2>
+			</header>
+			<ul>
+				<li>The .NET-Framework offers many ways of writing network services</li>
+				<li>Very comfortable and powerful: SignalR</li>
+				<li>Greatest advantage: works perfect with web apps</li>
+				<li>Here websockets or some fallback like long polling is used</li>
+				<li>Easy communication between apps</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="signalr-clients"><div>
+		<section>
+			<header>
+				<h2>A collection of clients</h2>
+			</header>
+			<img src="pictures/signalr.png" class="middle r" />
+		</section>
+	</div></div>
+	<div class="slide" id="example-signalr"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - SignalR</h2>
+			</header>
+			<a href="samples/SignalR.zip" title="Download source" class="example-download">SignalR.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="games"><div>
+		<section>
+			<header>
+				<h2>Games</h2>
+			</header>
+			<ul>
+				<li>Various game engines exist</li>
+				<li>Well known and very well working: XNA</li>
+				<li>For 2D gaming one example is SDL.NET</li>
+				<li>Cross-platform and established: MonoGame</li>
+				<li>Another interesting cross-platform engine: WAVE</li>
+				<li>Under Windows we can use DirectX or OpenGL</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-games"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Games</h2>
+			</header>
+			<a href="http://wave.blob.core.windows.net/code/Basic2DPhysics.zip" title="Download source" class="example-download">Basic2DPhysics.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="windows-store"><div>
+		<section>
+			<header>
+				<h2>Windows store apps</h2>
+			</header>
+			<ul>
+				<li>C# is one of the official languages for Windows apps</li>
+				<li>That includes Windows 8, Windows RT, Windows Phone 7 / 8</li>
+				<li>Windows Store apps are XAML based (like WPF)</li>
+				<li>However, they can only use the .NET core</li>
+				<li>They run sandboxed, i.e. with reduced rights</li>
+				<li>Accessing the filesystem is not (directly) possible</li>
+				<li>We have to use a new API called WinRT</li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="example-windows-store"><div>
+		<section>
+			<header>
+				<h2 class="example">&rarr; Example - Windows Store apps</h2>
+			</header>
+			<a href="samples/WindowsStore.zip" title="Download source" class="example-download">WindowsStore.zip</a>
+		</section>
+	</div></div>
+	<div class="slide" id="presentations"><div>
+		<section>
+			<header>
+				<h2>All available presentations</h2>
+			</header>
+			<div class="left">
+				<b>Week 1</b>
+				<ul>
+					<li><a href="day1.html">Presentation of Monday</a></li>
+					<li><a href="day2.html">Presentation of Tuesday</a></li>
+					<li><a href="day3.html">Presentation of Wednesday</a></li>
+					<li><a href="day4.html">Presentation of Thursday</a></li>
+					<li><a href="day5.html">Presentation of Friday</a></li>
+				</ul>
+			</div>
+			<div class="right">
+				<b>Week 2</b>
+				<ul>
+					<li><a href="day6.html">Presentation of Monday</a></li>
+					<li><a href="day7.html">Presentation of Tuesday</a></li>
+					<li><a href="day8.html">Presentation of Wednesday</a></li>
+					<li><a href="day9.html">Presentation of Thursday</a></li>
+				</ul>
+			</div>
+		</section>
+	</div></div>
+	<div class="slide" id="end"><div>
+		<section>
+			<header>
+				<h2>More questions? Just mail!</h2>
+			</header>
+			<img src="pictures/mvp.png" alt="MVP" title="Microsoft Visual C# MVP 2012" style="width: 25%; float: right;" />
+			<p>Florian Rappl, MVP Visual C#</p>
+			<ul>
+				<li>My homepage: <a href="http://www.florian-rappl.de">www.florian-rappl.de</a></li>
+				<li>My email address: <a href="mailto:mail@florian-rappl.de">mail@florian-rappl.de</a></li>
+				<li>Find me on Google+: <a href="http://gplus.to/FlorianRappl">gplus.to/FlorianRappl</a></li>
+			</ul>
+			<ul>
+				<li>The lecture is available online at <a href="http://csharp.florian-rappl.de/">csharp.florian-rappl.de</a></li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="progress"><div></div></div>
+	<script src="scripts/script.js"></script>
+	<!-- Copyright © 2013 Florian Rappl, www.florian-rappl.de -->
+</body>
+</html>
