@@ -223,47 +223,6 @@
 			<a href="https://github.com/CSharpLecture/Samples/blob/master/day3/Linq.cs" title="Download source" class="example-download">Linq.cs</a>
 		</section>
 	</div></div>
-	<div class="slide" id="auto-properties"><div>
-		<section>
-			<header>
-				<h2>Automatic property generation</h2>
-			</header>
-			<ul>
-				<li>Obviously the C# compiler does a lot for us</li>
-				<li>Writing variables and their properties is still some work</li>
-				<li>Another area where the C# compiler can help us</li>
-				<li>Consider: <code>int a; public int A { /* ... */ }</code></li>
-				<li>How about: <code>public int A { get; set; }</code></li>
-				<li>Compiler generates the member variable and associates it</li>
-				<li>Advantage: Sufficient for most cases</li>
-				<li>Disadvantage: Not helpful if we need value validation and more</li>
-			</ul>
-		</section>
-	</div></div>
-	<div class="slide" id="properties-with-abstract"><div>
-		<section>
-			<header>
-				<h2>Warning about auto properties</h2>
-			</header>
-			<ul>
-				<li>The syntax is the same as with <code>abstract</code> properties</li>
-				<li>The only difference is the <code>abstract</code> keyword</li>
-				<li>Auto prop. are very good in data-encapsulation classes</li>
-				<li>However, they have drawbacks in some cases (as seen)</li>
-				<li>Biggest drawback: We have no direct access to the variable</li>
-				<li>They are a good starter, which can be replaced easily</li>
-				<li>Advice: Use as often as possible, but do not hesitate to extend the code by changing it to a manual property</li>
-			</ul>
-		</section>
-	</div></div>
-	<div class="slide" id="example-auto-properties"><div>
-		<section>
-			<header>
-				<h2 class="example">&rarr; Example - Automatic properties</h2>
-			</header>
-			<a href="https://github.com/CSharpLecture/Samples/blob/master/day3/AutoProp.cs" title="Download source" class="example-download">AutoProp.cs</a>
-		</section>
-	</div></div>
 	<div class="slide" id="advanced-debugging"><div>
 		<section>
 			<header>
