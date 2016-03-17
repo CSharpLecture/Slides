@@ -30,8 +30,8 @@
 				<li>Images and image formats</li>
 				<li>User control drawing</li>
 				<li>Handling exceptions</li>
-				<li>The IDisposable interface</li>
-				<li>Releasing resources</li>
+				<li>Dynamic programming with C#</li>
+				<li>object, var and dynamic</li>
 				<li>Reflection</li>
 			</ul>
 		</section>
@@ -207,45 +207,56 @@
 			<a href="https://github.com/CSharpLecture/Samples/blob/master/day7/Exceptions.cs" title="Download source" class="example-download">Exceptions.cs</a>
 		</section>
 	</div></div>
-	<div class="slide" id="idisposable"><div>
+	<div class="slide" id="dynamic"><div>
 		<section>
 			<header>
-				<h2>The <code>IDisposable</code> interface</h2>
+				<h2>Dynamic programming</h2>
 			</header>
 			<ul>
-				<li>Many methods have to mark resources as being in use</li>
-				<li>The question is: How to release such resources?</li>
-				<li>Apparently the <code>Close()</code> method is important</li>
-				<li>When automatically releasing resources, how does the GC know?</li>
-				<li>The GC will automatically call the <code>Dispose()</code> method</li>
-				<li>The method is defined in the interface <code>IDisposable</code></li>
-				<li>So this is our chance to tell the GC what to do</li>
-				<li>Additionally we have a destructor, but that is uninteresting</li>
+				<li>C# and the CLR are static typed</li>
+				<li>However, the DLR (Dynamic Language Runtime) is not</li>
+				<li>C# introduces the <code>DynamicObject</code> type</li>
+				<li>This is our portal to the DLR</li>
+				<li>We have to tell the compiler explicitely to use dynamic</li>
+				<li>How to use? <code>dynamic a = 4</code></li>
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="releasing-resources"><div>
+	<div class="slide" id="dynamic-opportunities"><div>
 		<section>
 			<header>
-				<h2>Releasing resources</h2>
+				<h2>Opportunities</h2>
 			</header>
 			<ul>
-				<li>We can explicitly release resources using a <code>using</code> construct</li>
-				<li>The syntax is quite close to <code>foreach</code></li>
-				<li>We could also call <code>Dispose()</code> directly</li>
+				<li>Easier interaction with dynamic languages</li>
+				<li>Here mostly JavaScript and Python are mentioned</li>
+				<li>However, we lose intellisense support</li>
+				<li>The compiler cannot detect errors</li>
+				<li>Be aware of possible exceptions during runtime</li>
 			</ul>
-<pre>
-<code>using(var fs = new FileStream(/* ... */)) {</code>
-<code>	/* Do something */</code>
-<code>} // Resource automatically closed and freed</code>
-</pre>
 		</section>
 	</div></div>
-	<div class="slide" id="example-resource-management"><div>
+	<div class="slide" id="example-dynamic"><div>
 		<section>
 			<header>
-				<h2 class="example">&rarr; Example - Resource management</h2>
+				<h2 class="example">&rarr; Example - Dynamic</h2>
 			</header>
+			<a href="https://github.com/CSharpLecture/Samples/blob/master/day5/Dynamic.cs" title="Download source" class="example-download">Dynamic.cs</a>
+		</section>
+	</div></div>
+	<div class="slide" id="object-var-dynamic"><div>
+		<section>
+			<header>
+				<h2>object, var and dynamic</h2>
+			</header>
+			<ul>
+				<li>Never think they are equal!</li>
+				<li><code>var</code> can be <code>object</code> or <code>dynamic</code></li>
+				<li><code>var</code> is no type, but a placeholder</li>
+				<li><code>object</code> is the most general type; everything is an object</li>
+				<li><code>dynamic</code> is no type, but a switch</li>
+				<li>It tells the compiler to use the DLR</li>
+			</ul>
 		</section>
 	</div></div>
 	<div class="slide" id="reflection"><div>

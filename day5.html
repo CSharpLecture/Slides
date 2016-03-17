@@ -29,11 +29,11 @@
 				<li>Accessing the file system</li>
 				<li>Streams</li>
 				<li>Performing web requests</li>
-				<li>The C# event system</li>
 				<li>Serializing data in C#</li>
 				<li>The XML serializer</li>
-				<li>Dynamic programming with C#</li>
-				<li>object, var and dynamic</li>
+				<li>The IDisposable interface</li>
+				<li>Releasing resources</li>
+				<li>The C# event system</li>
 			</ul>
 		</section>
 	</div></div>
@@ -183,44 +183,45 @@
 			<a href="https://github.com/CSharpLecture/Samples/blob/master/day5/WebRequest.cs" title="Download source" class="example-download">WebRequest.cs</a>
 		</section>
 	</div></div>
-	<div class="slide" id="event-system"><div>
+	<div class="slide" id="idisposable"><div>
 		<section>
 			<header>
-				<h2>The C# event system</h2>
+				<h2>The <code>IDisposable</code> interface</h2>
 			</header>
 			<ul>
-				<li>Important: The <code>event</code> keyword</li>
-				<li>Events are just delegates, but with benefits</li>
-				<li>Only accessible with the <code>+=</code>, <code>-=</code> operations (outside)</li>
-				<li>Inside we can execute them (called firing)</li>
-				<li><code>public event EventHandler MyEvent</code> to register</li>
-				<li>The delegate in this example is <code>EventHandler</code></li>
-				<li>.NET pattern: Arguments <code>object</code>, <code>EventArgs</code> (or derived)</li>
-				<li>The return type should be <code>void</code></li>
+				<li>Many methods have to mark resources as being in use</li>
+				<li>The question is: How to release such resources?</li>
+				<li>Apparently the <code>Close()</code> method is important</li>
+				<li>When automatically releasing resources, how does the GC know?</li>
+				<li>The GC will automatically call the <code>Dispose()</code> method</li>
+				<li>The method is defined in the interface <code>IDisposable</code></li>
+				<li>So this is our chance to tell the GC what to do</li>
+				<li>Additionally we have a destructor, but that is uninteresting</li>
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="event-important"><div>
+	<div class="slide" id="releasing-resources"><div>
 		<section>
 			<header>
-				<h2>Important event facts</h2>
+				<h2>Releasing resources</h2>
 			</header>
 			<ul>
-				<li>Firing an event is done in the current thread</li>
-				<li>If necessary: perform context switch</li>
-				<li>If the handler is not set, it will be <code>null</code> (check first!)</li>
-				<li>One should prefer using overrides instead of events</li>
-				<li>This is of course only possible when deriving from a class</li>
-				<li>Events are (mostly) fired synchronously</li>
+				<li>We can explicitly release resources using a <code>using</code> construct</li>
+				<li>The syntax is quite close to <code>foreach</code></li>
+				<li>We could also call <code>Dispose()</code> directly</li>
 			</ul>
+<pre>
+<code>using(var fs = new FileStream(/* ... */)) {</code>
+<code>	/* Do something */</code>
+<code>} // Resource automatically closed and freed</code>
+</pre>
 		</section>
 	</div></div>
-	<div class="slide" id="example-events"><div>
+	<div class="slide" id="example-resource-management"><div>
 		<section>
 			<header>
-				<h2 class="example">&rarr; Example - Events</h2>
+				<h2 class="example">&rarr; Example - Resource management</h2>
 			</header>
-			<a href="https://github.com/CSharpLecture/Samples/blob/master/day5/Event" title="Download source" class="example-download">Event.zip</a>
 		</section>
 	</div></div>
 	<div class="slide" id="serializing"><div>
@@ -274,56 +275,44 @@
 			<a href="https://github.com/CSharpLecture/Samples/blob/master/day5/Serialization" title="Download source" class="example-download">Serialization.zip</a>
 		</section>
 	</div></div>
-	<div class="slide" id="dynamic"><div>
+	<div class="slide" id="event-system"><div>
 		<section>
 			<header>
-				<h2>Dynamic programming</h2>
+				<h2>The C# event system</h2>
 			</header>
 			<ul>
-				<li>C# and the CLR are static typed</li>
-				<li>However, the DLR (Dynamic Language Runtime) is not</li>
-				<li>C# introduces the <code>DynamicObject</code> type</li>
-				<li>This is our portal to the DLR</li>
-				<li>We have to tell the compiler explicitely to use dynamic</li>
-				<li>How to use? <code>dynamic a = 4</code></li>
+				<li>Important: The <code>event</code> keyword</li>
+				<li>Events are just delegates, but with benefits</li>
+				<li>Only accessible with the <code>+=</code>, <code>-=</code> operations (outside)</li>
+				<li>Inside we can execute them (called firing)</li>
+				<li><code>public event EventHandler MyEvent</code> to register</li>
+				<li>The delegate in this example is <code>EventHandler</code></li>
+				<li>.NET pattern: Arguments <code>object</code>, <code>EventArgs</code> (or derived)</li>
+				<li>The return type should be <code>void</code></li>
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="dynamic-opportunities"><div>
+	<div class="slide" id="event-important"><div>
 		<section>
 			<header>
-				<h2>Opportunities</h2>
+				<h2>Important event facts</h2>
 			</header>
 			<ul>
-				<li>Easier interaction with dynamic languages</li>
-				<li>Here mostly JavaScript and Python are mentioned</li>
-				<li>However, we lose intellisense support</li>
-				<li>The compiler cannot detect errors</li>
-				<li>Be aware of possible exceptions during runtime</li>
+				<li>Firing an event is done in the current thread</li>
+				<li>If necessary: perform context switch</li>
+				<li>If the handler is not set, it will be <code>null</code> (check first!)</li>
+				<li>One should prefer using overrides instead of events</li>
+				<li>This is of course only possible when deriving from a class</li>
+				<li>Events are (mostly) fired synchronously</li>
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="example-dynamic"><div>
+	<div class="slide" id="example-events"><div>
 		<section>
 			<header>
-				<h2 class="example">&rarr; Example - Dynamic</h2>
+				<h2 class="example">&rarr; Example - Events</h2>
 			</header>
-			<a href="https://github.com/CSharpLecture/Samples/blob/master/day5/Dynamic.cs" title="Download source" class="example-download">Dynamic.cs</a>
-		</section>
-	</div></div>
-	<div class="slide" id="object-var-dynamic"><div>
-		<section>
-			<header>
-				<h2>object, var and dynamic</h2>
-			</header>
-			<ul>
-				<li>Never think they are equal!</li>
-				<li><code>var</code> can be <code>object</code> or <code>dynamic</code></li>
-				<li><code>var</code> is no type, but a placeholder</li>
-				<li><code>object</code> is the most general type; everything is an object</li>
-				<li><code>dynamic</code> is no type, but a switch</li>
-				<li>It tells the compiler to use the DLR</li>
-			</ul>
+			<a href="https://github.com/CSharpLecture/Samples/blob/master/day5/Event" title="Download source" class="example-download">Event.zip</a>
 		</section>
 	</div></div>
 	<div class="slide" id="presentations"><div>
