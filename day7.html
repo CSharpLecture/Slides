@@ -15,7 +15,7 @@
 		<section>
 			<header>
 				<h2>Programming C#</h2>
-				<h3>Day 6: Project management with Visual Studio, sample projects, other technologies</h3>
+				<h3>Day 7: IEnumerable, Libraries and NuGet, work on the projects</h3>
 			</header>
 			<img src="pictures/cover.jpg" alt="">
 		</section>
@@ -26,207 +26,141 @@
 				<h2>Content</h2>
 			</header>
 			<ul>
-				<li>The solution explorer</li>
-				<li>Managing projects</li>
-				<li>Build rules and events</li>
-				<li>Using hardware acceleration in WPF</li>
-				<li>Building dynamic webpages with ASP.NET MVC</li>
-				<li>Creating simple network services</li>
-				<li>Games with DirectX or OpenGL</li>
-				<li>WindowsPhone / Windows store apps</li>
+				<li>The IEnumerable interface</li>
+				<li>creating Enumerators with <code>yield</code></li>
+				<li>What are libraries?</li>
+				<li>Creating (CLR) libraries with C#</li>
+				<li>Package managers</li>
+				<li>The NuGet package manager</li>
+				<li>Overall project structure</li>
+				<!--<li>Using Git or TFS for source control</li>-->
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="solution-explorer"><div>
+	<div class="slide" id="IEnumerable"><div>
 		<section>
 			<header>
-				<h2>The solution explorer</h2>
+				<h2>The IEnumerable interface</h2>
 			</header>
 			<ul>
-				<li>Add or remove project resources</li>
-				<li>Set compilation options</li>
-				<li>Manage dependencies</li>
-				<li>Setup (remote) debugging</li>
-				<li>Manage projects</li>
+				<li><code>IEnumerable</code> allows us to iterate through classes</li>
+				<li>Our own implementation enables use of <code>foreach</code> for user-defined classes</li>
+				<li>opens way to LINQ requests</li>
+				<li>an enumerator is used to go through the elements<li>
+				<li>think about using a specialized version with <code>IEnumerable&lt;T&gt;<code></li>
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="manage-projects"><div>
+	<div class="slide" id="yield"><div>
 		<section>
 			<header>
-				<h2>Manage projects</h2>
+				<h2>The <code>yield</code> statement</h2>
 			</header>
 			<ul>
-				<li>A project represents an assembly</li>
-				<li>There is a huge variety of project templates</li>
-				<li>Differences: Basic settings, included dependencies, given code</li>
-				<li>The given code can be a great help</li>
-				<li>Reduces writing the same code over and over</li>
-				<li>Also the right target framework is set</li>
+				<li>Writing a whole Enumerator class to iterate through a user defined class can be lengthy</li>
+				<li>In many cases only the method <code>GetEnumerator</code> is needed.</li>
+				<li>Here <code>yield</code> can simplify our life as it creates an Enumerator.
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="build-rules-events"><div>
+	<div class="slide" id="example-yield"><div>
 		<section>
 			<header>
-				<h2>Build rules and events</h2>
+				<h2 class="example">&rarr; Example - Enumerators and yield</h2>
+			</header>
+				<a href="https://github.com/CSharpLecture/Samples/blob/master/day7/EnumeratorAndYieldExample.cs" title="Download source" class="example-download">EnumeratorAndYieldExample</a>
+		</section>
+	</div></div>
+	<div class="slide" id="libraries"><div>
+		<section>
+			<header>
+				<h2>What are libraries?</h2>
 			</header>
 			<ul>
-				<li>Targets and target CPUs</li>
-				<li>Debug files</li>
-				<li>Build order</li>
-				<li>Generating XML documentation files</li>
-				<li>Symbols (definitions)</li>
-				<li>Pre- and post build events</li>
-				<li>Warning levels</li>
+				<li>A library is a compiled binary</li>
+				<li>The only difference to an executable is that no Main() is defined</li>
+				<li>A library consists of types and functionality</li>
+				<li>Using 3rd party libraries boosts our productivity</li>
+				<li>There are great libraries written in C# or</li>
+				<li>Libraries that just wrap native libraries</li>
+				<li>We already use libraries if we use the .NET-Framework</li>
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="example-project-management"><div>
+	<div class="slide" id="csharp-library"><div>
 		<section>
 			<header>
-				<h2 class="example">&rarr; Example - Project management</h2>
-			</header>
-		</section>
-	</div></div>
-	<div class="slide" id="wpf"><div>
-		<section>
-			<header>
-				<h2>WPF</h2>
+				<h2>Creating a library with C#</h2>
 			</header>
 			<ul>
-				<li>Framework for GUI, based on XAML</li>
-				<li>Improved binding and styling capabilities</li>
-				<li>Hardware acceleration of the GUI</li>
-				<li>Disadvantage: Startup time and memory footprint</li>
-				<li>Perfect suited for the new MVVM pattern</li>
-				<li>Distinction: Visual tree and logical tree</li>
-				<li>Separation is very important</li>
+				<li>In Visual Studio: Start, New Project, C#, Class Library</li>
+				<li>Libraries are the most efficient way to re-use projects</li>
+				<li>Libraries are to the OS as what classes are to C#</li>
+				<li>They improve reusability and encapsulation</li>
+				<li>MSIL libraries also contain meta-data for reflection</li>
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="mvvm"><div>
+	<div class="slide" id="clr-assembly"><div>
 		<section>
 			<header>
-				<h2>Model-View-ViewModel</h2>
+				<h2>A CLR assembly</h2>
 			</header>
-			<img src="pictures/mvvm.png" class="middle r" />
+			<img src="pictures/assembly.png" class="middle r" />
 		</section>
 	</div></div>
-	<div class="slide" id="example-wpf"><div>
+	<div class="slide" id="package-managers"><div>
 		<section>
 			<header>
-				<h2 class="example">&rarr; Example - WPF</h2>
-			</header>
-			<a href="https://github.com/CSharpLecture/Samples/blob/master/day6/WPF" title="Download source" class="example-download">WPF.zip</a>
-		</section>
-	</div></div>
-	<div class="slide" id="asp-net-mvc"><div>
-		<section>
-			<header>
-				<h2>ASP.NET MVC</h2>
+				<h2>Package managers</h2>
 			</header>
 			<ul>
-				<li>ASP introduced the webforms concept</li>
-				<li>ASP.NET MVC is much closer to the outcome</li>
-				<li>Very tight control and comfortable flow</li>
-				<li>Excellent Model-View-Controller implementation</li>
-				<li>Additionally routes, model helpers, ... included</li>
-				<li>Very easy to extend and adjust</li>
+				<li>Using external libraries is quite easy</li>
+				<li>The hard part is maintenance and dependencies</li>
+				<li>We have to keep them up-to-date and we might need other libraries</li>
+				<li>This can get quite cruel, since where to get is not always trivial</li>
+				<li>A package manager offers a solution to those problems</li>
+				<li>Usually there is a database with libraries</li>
+				<li>Adding a library will result in a check for the dependencies and installation of the required libraries</li>
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="mvc"><div>
+	<div class="slide" id="nuget"><div>
 		<section>
 			<header>
-				<h2>Model-View-Controller</h2>
-			</header>
-			<img src="pictures/mvc.png" class="middle r" />
-		</section>
-	</div></div>
-	<div class="slide" id="example-asp-net-mvc"><div>
-		<section>
-			<header>
-				<h2 class="example">&rarr; Example - ASP.NET MVC</h2>
-			</header>
-			<a href="https://github.com/CSharpLecture/Samples/blob/master/day6/ASPMVC" title="Download source" class="example-download">ASPMVC.zip</a>
-		</section>
-	</div></div>
-	<div class="slide" id="signalr"><div>
-		<section>
-			<header>
-				<h2>SignalR</h2>
+				<h2>NuGet</h2>
 			</header>
 			<ul>
-				<li>The .NET-Framework offers many ways of writing network services</li>
-				<li>Very comfortable and powerful: SignalR</li>
-				<li>Greatest advantage: works perfect with web apps</li>
-				<li>Here websockets or some fallback like long polling is used</li>
-				<li>Easy communication between apps</li>
+				<li>NuGet is an open-source package manager for the Visual Studio</li>
+				<li>It is so popular, that it has been integrated into the Visual Studio 2012</li>
+				<li>Every external library is now on NuGet</li>
+				<li>Easy to publish on the public NuGet feed or create own private feeds</li>
+				<li>Big advantage: Project bound and easy updating</li>
+				<li>Another advantage: Powershell integrated</li>
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="signalr-clients"><div>
+	<div class="slide" id="nuget-flow"><div>
 		<section>
 			<header>
-				<h2>A collection of clients</h2>
+				<h2>NuGet flow</h2>
 			</header>
-			<img src="pictures/signalr.png" class="middle r" />
+			<img src="pictures/nuget.png" class="middle r" />
 		</section>
 	</div></div>
-	<div class="slide" id="example-signalr"><div>
+	<div class="slide" id="project-structure"><div>
 		<section>
 			<header>
-				<h2 class="example">&rarr; Example - SignalR</h2>
-			</header>
-			<a href="https://github.com/CSharpLecture/Samples/blob/master/day6/SignalR" title="Download source" class="example-download">SignalR.zip</a>
-		</section>
-	</div></div>
-	<div class="slide" id="games"><div>
-		<section>
-			<header>
-				<h2>Games</h2>
+				<h2>Overall project structure</h2>
 			</header>
 			<ul>
-				<li>Various game engines exist</li>
-				<li>Well known and very well working: XNA</li>
-				<li>For 2D gaming one example is SDL.NET</li>
-				<li>Cross-platform and established: MonoGame</li>
-				<li>Another interesting cross-platform engine: WAVE</li>
-				<li>Under Windows we can use DirectX or OpenGL</li>
+				<li>Add external resources to your project(s)</li>
+				<li>Use NuGet for external libraries</li>
+				<li>Create own libraries if you want to re-use (non-UI) functionality</li>
+				<li>Use resource files for data, like images, sounds, texts, ...</li>
+				<li>Big advantage: They can be localized (German, English, ...)</li>
+				<li>Use DRY: Don't Repeat Yourself</li>
 			</ul>
-		</section>
-	</div></div>
-	<div class="slide" id="example-games"><div>
-		<section>
-			<header>
-				<h2 class="example">&rarr; Example - Games</h2>
-			</header>
-			<a href="http://wave.blob.core.windows.net/code/Basic2DPhysics.zip" title="Download source" class="example-download">Basic2DPhysics.zip</a>
-		</section>
-	</div></div>
-	<div class="slide" id="windows-store"><div>
-		<section>
-			<header>
-				<h2>Windows store apps</h2>
-			</header>
-			<ul>
-				<li>C# is one of the official languages for Windows apps</li>
-				<li>That includes Windows 8, Windows RT, Windows Phone 7 / 8</li>
-				<li>Windows Store apps are XAML based (like WPF)</li>
-				<li>However, they can only use the .NET core</li>
-				<li>They run sandboxed, i.e. with reduced rights</li>
-				<li>Accessing the filesystem is not (directly) possible</li>
-				<li>We have to use a new API called WinRT</li>
-			</ul>
-		</section>
-	</div></div>
-	<div class="slide" id="example-windows-store"><div>
-		<section>
-			<header>
-				<h2 class="example">&rarr; Example - Windows Store apps</h2>
-			</header>
-			<a href="https://github.com/CSharpLecture/Samples/blob/master/day6/WindowsStore" title="Download source" class="example-download">WindowsStore.zip</a>
 		</section>
 	</div></div>
 	<div class="slide" id="presentations"><div>
