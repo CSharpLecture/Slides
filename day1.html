@@ -51,6 +51,21 @@
 			</ul>
 		</section>
 	</div></div>
+	<div class="slide" id="console"><div>
+		<section>
+			<header>
+				<h2>Console projects</h2>
+			</header>
+			<ul>
+				<li>No GUI, just the plain Windows command line</li>
+				<li>All possibilities given in the <code>Console</code> class</li>
+				<li>Possible to pass arbitrary objects to <code>Console.Write()</code></li>
+				<li>Reason: Every class inherits from <code>object</code> and has <code>ToString()</code></li>
+				<li>Possibility of formatting strings with placeholders <code>{0}</code> etc.</li>
+				<li>Use <code>ReadLine()</code> to read string until <i>RETURN</i></li>
+			</ul>
+		</section>
+	</div></div>
 	<div class="slide" id="basic-concepts-1"><div>
 		<section>
 			<header>
@@ -338,18 +353,20 @@
 			</ul>
 		</section>
 	</div></div>
-	<div class="slide" id="console"><div>
+	<div class="slide" id="advanced-debugging"><div>
 		<section>
 			<header>
-				<h2>Console projects</h2>
+				<h2>Advanced debugging</h2>
 			</header>
 			<ul>
-				<li>No GUI, just the plain Windows command line</li>
-				<li>All possibilities given in the <code>Console</code> class</li>
-				<li>Possible to pass arbitrary objects to <code>Console.Write()</code></li>
-				<li>Reason: Every class inherits from <code>object</code> and has <code>ToString()</code></li>
-				<li>Possibility of formatting strings with placeholders <code>{0}</code> etc.</li>
-				<li>Use <code>ReadLine()</code> to read string until <i>RETURN</i></li>
+				<li>Never use a <code>MessageBox</code> or the <code>Console</code> for debugging</li>
+				<li>Best options: <code>Debug</code> or <code>Trace</code></li>
+				<li>Here output will be send to the output window</li>
+				<li>They are only used if certain definitions are active</li>
+				<li>Also remember that we have the <code>DEBUG</code> definition in debug-mode</li>
+				<li>Recommendation: Just use <code>Debug.WriteLine()</code></li>
+				<li>Also use breakpoints and (advanced) conditional breakpoints</li>
+				<li>Use the stack-trace for navigation</li>
 			</ul>
 		</section>
 	</div></div>
