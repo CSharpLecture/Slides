@@ -106,7 +106,7 @@ div.about p {
 	line-height: 120px;
 	text-align: center;
 	color: white;
-	content: 'Florian Rappl, Markus A. Huber, Department of Physics';
+	content: 'Florian Rappl, Markus A. Huber, Department of Physics; Benedikt Strasser';
 	position: absolute;
 	z-index: 2;
 	background: rgba(0, 0, 0, 0.6) url(../images/uni.svg) 100px center no-repeat;
